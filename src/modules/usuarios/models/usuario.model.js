@@ -16,9 +16,6 @@ export const UsuarioModel = sequelize.define(
                 notEmpty: {
                     msg: "O nome não pode estar vazio"
                 },
-                isAlpha: {
-                    msg: "O nome deve conter apenas letras"
-                },
                 len: {
                     args: [1, 150],
                     msg: "O nome deve ter entre 1 e 150 caracteres"
@@ -35,17 +32,10 @@ export const UsuarioModel = sequelize.define(
                 notEmpty: {
                     msg: "A matrícula não pode estar vazia"
                 },
-                isAlphanumeric: {
-                    msg: "A matrícula deve conter apenas letras e números"
-                },
                 len: {
                     args: [5, 5],
                     msg: "A matrícula deve ter exatamente 5 caracteres"
                 },
-                is: {
-                    args: /^[a-zA-Z]\d{4}$/,
-                    msg: "A matrícula deve começar com uma letra seguida de 4 números"
-                }
             },
         },
         telefone: {
@@ -62,20 +52,12 @@ export const UsuarioModel = sequelize.define(
             },
         },
         senha: {
-            type: DataTypes.STRING(8),
+            type: DataTypes.STRING(255),
             allowNull: false,
             validate: {
                 notEmpty: {
                     msg: "A senha não pode estar vazia"
                 },
-                len: {
-                    args: [8, 8],
-                    msg: "A senha deve ter exatamente 8 caracteres"
-                },
-                is: {
-                    args: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8}$/,
-                    msg: "A senha deve ter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial, totalizando 8 caracteres."
-                }
             },
         },
         email: {

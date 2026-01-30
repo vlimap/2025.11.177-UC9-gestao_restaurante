@@ -1,5 +1,7 @@
 import { UsuarioModel } from "../models/usuario.model.js";
-
+import dotenv from "dotenv/config"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 export class UsuarioController {
     static async listar(req, res) {
         try {
@@ -128,6 +130,24 @@ export class UsuarioController {
             return res.json({ mensagem: "Login bem-sucedido!", token });
         } catch (error) {
             res.status(500).json({ msg: "Erro interno, tente novamente mais tarde.", erro: error.message })
+        }
+    }
+    static async criarAdmin(req, res) {
+        try {
+            const senhaHash = await bcrypt.hash(process.env.SENHA_SUPER_ADMIN, 10)
+            await UsuarioModel.create(
+                {
+                    nome: process.env.NOME_SUPER_ADMIN,
+                    matricula: process.env.MATRICULA_SUPER_ADMIN,
+                    email: process.env.EMAIL_SUPER_ADMIN,
+                    senha: senhaHash,
+                    perfil: "admin",
+                    telefone: process.env.TELEFONE_SUPER_ADMIN
+                }
+            )
+            res.status(201).json({ msg: 'Usuário SUPER ADMIN criado com sucesso!' })
+        } catch (error) {
+            res.status(500).json({ msg: "Erro ao criar admin, tente novamente mais tarde.", erro: error.message })
         }
     }
 
