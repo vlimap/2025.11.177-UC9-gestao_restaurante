@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize"
 import dotenv from 'dotenv'
 dotenv.config()
-// criando um objeto
+
 const sequelize = new Sequelize(process.env.DATABASE_URL)
 
 try {
