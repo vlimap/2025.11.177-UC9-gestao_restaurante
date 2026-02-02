@@ -1,0 +1,331 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-02-02T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_gestao_restaurante",
+      "parentId": null,
+      "modified": 0,
+      "created": 0,
+      "name": "Gestão Restaurante",
+      "description": "Coleção de rotas da API",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_saude",
+      "parentId": "wrk_gestao_restaurante",
+      "modified": 0,
+      "created": 0,
+      "name": "Saúde",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 10,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_usuarios",
+      "parentId": "wrk_gestao_restaurante",
+      "modified": 0,
+      "created": 0,
+      "name": "Usuários",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 20,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_cardapio",
+      "parentId": "wrk_gestao_restaurante",
+      "modified": 0,
+      "created": 0,
+      "name": "Cardápio",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 30,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_mesas",
+      "parentId": "wrk_gestao_restaurante",
+      "modified": 0,
+      "created": 0,
+      "name": "Mesas",
+      "description": "",
+      "environment": {},
+      "metaSortKey": 40,
+      "_type": "request_group"
+    },
+
+    {
+      "_id": "req_root_get",
+      "parentId": "fld_saude",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/",
+      "name": "GET /",
+      "description": "Healthcheck",
+      "method": "GET",
+      "headers": [],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+
+    {
+      "_id": "req_login",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios/login",
+      "name": "POST /usuarios/login",
+      "description": "Login (público)",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@exemplo.com\",\n  \"senha\": \"senha_forte_aqui\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_perfil",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios/perfil",
+      "name": "GET /usuarios/perfil",
+      "description": "Requer token",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_usuarios_listar",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios",
+      "name": "GET /usuarios",
+      "description": "Admin",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_usuarios_criar",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios",
+      "name": "POST /usuarios",
+      "description": "Admin",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Cliente 1\",\n  \"matricula\": \"12345\",\n  \"email\": \"cliente1@exemplo.com\",\n  \"senha\": \"senha123\",\n  \"perfil\": \"cliente\",\n  \"telefone\": \"11999999999\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_usuarios_editar",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios/{{ usuario_id }}",
+      "name": "PUT /usuarios/:id",
+      "description": "Admin",
+      "method": "PUT",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Cliente 1 Editado\",\n  \"matricula\": \"12345\",\n  \"email\": \"cliente1@exemplo.com\",\n  \"senha\": \"senha123\",\n  \"perfil\": \"cliente\",\n  \"telefone\": \"11999999999\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_usuarios_excluir",
+      "parentId": "fld_usuarios",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/usuarios/{{ usuario_id }}",
+      "name": "DELETE /usuarios/:id",
+      "description": "Admin",
+      "method": "DELETE",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+
+    {
+      "_id": "req_cardapio_listar",
+      "parentId": "fld_cardapio",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/cardapio",
+      "name": "GET /cardapio",
+      "description": "Cliente",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_cardapio_criar",
+      "parentId": "fld_cardapio",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/cardapio",
+      "name": "POST /cardapio",
+      "description": "Admin",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Prato 1\",\n  \"descricao\": \"Descrição do prato\",\n  \"porcao\": \"1\",\n  \"preco\": 29.90,\n  \"usuario_id\": \"{{ usuario_id }}\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_cardapio_editar",
+      "parentId": "fld_cardapio",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/cardapio/{{ cardapio_id }}",
+      "name": "PUT /cardapio/:id",
+      "description": "Admin",
+      "method": "PUT",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Prato 1 Editado\",\n  \"descricao\": \"Descrição atualizada\",\n  \"porcao\": \"1\",\n  \"preco\": 32.90,\n  \"usuario_id\": \"{{ usuario_id }}\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_cardapio_excluir",
+      "parentId": "fld_cardapio",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/cardapio/{{ cardapio_id }}",
+      "name": "DELETE /cardapio/:id",
+      "description": "Admin",
+      "method": "DELETE",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+
+    {
+      "_id": "req_mesas_listar",
+      "parentId": "fld_mesas",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/mesas",
+      "name": "GET /mesas",
+      "description": "Cliente",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_mesas_criar",
+      "parentId": "fld_mesas",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/mesas",
+      "name": "POST /mesas",
+      "description": "Admin",
+      "method": "POST",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"numero\": 10,\n  \"capacidade\": 4,\n  \"usuario_id\": \"{{ usuario_id }}\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_mesas_editar",
+      "parentId": "fld_mesas",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/mesas/{{ mesa_id }}",
+      "name": "PUT /mesas/:id",
+      "description": "Admin",
+      "method": "PUT",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"numero\": 10,\n  \"capacidade\": 6,\n  \"usuario_id\": \"{{ usuario_id }}\"\n}"
+      },
+      "parameters": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_mesas_excluir",
+      "parentId": "fld_mesas",
+      "modified": 0,
+      "created": 0,
+      "url": "http://localhost:3000/mesas/{{ mesa_id }}",
+      "name": "DELETE /mesas/:id",
+      "description": "Admin",
+      "method": "DELETE",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ token }}" }
+      ],
+      "body": {},
+      "parameters": [],
+      "_type": "request"
+    }
+  ]
+}
