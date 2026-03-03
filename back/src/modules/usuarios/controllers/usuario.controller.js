@@ -3,24 +3,6 @@ import dotenv from "dotenv/config"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-function obterConfiguracaoCookie() {
-    const nomeCookie = process.env.AUTH_COOKIE_NAME || "auth_token";
-    const maxAgePadrao = 24 * 60 * 60 * 1000;
-    const maxAge = Number(process.env.AUTH_COOKIE_MAX_AGE_MS) || maxAgePadrao;
-    const secure = process.env.NODE_ENV === "production";
-
-    return {
-        nomeCookie,
-        options: {
-            httpOnly: true,
-            secure: secure,
-            sameSite: "lax",
-            path: "/",
-            maxAge: maxAge
-        }
-    };
-}
-
 export class UsuarioController {
     static async listar(req, res) {
         try {
@@ -146,8 +128,13 @@ export class UsuarioController {
                 }
             );
 
-            const { nomeCookie, options } = obterConfiguracaoCookie();
-            res.cookie(nomeCookie, token, options);
+            res.cookie(process.env.AUTH_COOKIE_NAME, token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV ,
+                sameSite: "lax",
+                path: "/",
+                maxAge: Number(process.env.AUTH_COOKIE_MAX_AGE_MS)
+            });
 
             return res.json({ mensagem: "Login bem-sucedido!" });
         } catch (error) {
@@ -157,12 +144,11 @@ export class UsuarioController {
 
     static async logout(req, res) {
         try {
-            const { nomeCookie, options } = obterConfiguracaoCookie();
-            res.clearCookie(nomeCookie, {
-                httpOnly: options.httpOnly,
-                secure: options.secure,
-                sameSite: options.sameSite,
-                path: options.path
+            res.clearCookie(process.env.AUTH_COOKIE_NAME, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV ,
+                sameSite: "lax",
+                path: "/"
             });
 
             return res.status(200).json({ mensagem: "Logout realizado com sucesso!" });
