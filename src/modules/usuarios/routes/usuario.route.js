@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Rota pública - login
 router.post("/login", UsuarioController.login);
+router.post("/logout", UsuarioController.logout);
 
 // Rotas protegidas
 router.get("/perfil", autenticarToken, UsuarioController.perfil);

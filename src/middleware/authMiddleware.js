@@ -4,6 +4,23 @@ import dotenv from "dotenv";
 // Carrega JWT_SECRET (e outras variáveis) do .env
 dotenv.config();
 
+function extrairTokenDoCookie(cookieHeader, nomeCookie) {
+  if (!cookieHeader) {
+    return null;
+  }
+
+  const cookies = cookieHeader.split(";");
+
+  for (const cookie of cookies) {
+    const [nome, ...valor] = cookie.split("=");
+    if (nome && nome.trim() === nomeCookie) {
+      return decodeURIComponent(valor.join("=").trim());
+    }
+  }
+
+  return null;
+}
+
 // Middleware de autenticação.
 // Ele roda ANTES do controller e decide se a requisição pode seguir.
 //
@@ -11,13 +28,17 @@ dotenv.config();
 // - Header: Authorization: Bearer <token>
 // - Ex.: Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 export function autenticarToken(req, res, next) {
+  const nomeCookie = process.env.AUTH_COOKIE_NAME || "auth_token";
+
   // Pega o header "authorization" (pode vir em minúsculo).
   const authHeader = req.headers["authorization"];
 
   // Se existir, separa por espaço e pega a segunda parte.
   // "Bearer <token>" -> token fica no índice 1.
   // Normal mente o token é retornado assim: Bearer ejyasdwmwmrksdadnasd
-  const token = authHeader && authHeader.split(" ")[1];
+  const tokenBearer = authHeader && authHeader.split(" ")[1];
+  const tokenCookie = extrairTokenDoCookie(req.headers.cookie, nomeCookie);
+  const token = tokenBearer || tokenCookie;
 
   // Se não há token, a pessoa não está autenticada.
   if (!token) {

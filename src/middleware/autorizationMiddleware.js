@@ -19,7 +19,7 @@ export function permitirPerfis(perfisPermitidos) {
 // Observação: o token precisa conter `perfil` (ex.: "admin").
 export const autorization = {
 	admin: permitirPerfis(["admin"]),
-	cliente: permitirPerfis(["cliente"])
+	cliente: permitirPerfis(["cliente", "admin"])
 };
 
 export default autorization;

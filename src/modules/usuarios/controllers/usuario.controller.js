@@ -2,6 +2,25 @@ import { UsuarioModel } from "../models/usuario.model.js";
 import dotenv from "dotenv/config"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+
+function obterConfiguracaoCookie() {
+    const nomeCookie = process.env.AUTH_COOKIE_NAME || "auth_token";
+    const maxAgePadrao = 24 * 60 * 60 * 1000;
+    const maxAge = Number(process.env.AUTH_COOKIE_MAX_AGE_MS) || maxAgePadrao;
+    const secure = process.env.NODE_ENV === "production";
+
+    return {
+        nomeCookie,
+        options: {
+            httpOnly: true,
+            secure: secure,
+            sameSite: "lax",
+            path: "/",
+            maxAge: maxAge
+        }
+    };
+}
+
 export class UsuarioController {
     static async listar(req, res) {
         try {
@@ -127,11 +146,31 @@ export class UsuarioController {
                 }
             );
 
-            return res.json({ mensagem: "Login bem-sucedido!", token });
+            const { nomeCookie, options } = obterConfiguracaoCookie();
+            res.cookie(nomeCookie, token, options);
+
+            return res.json({ mensagem: "Login bem-sucedido!" });
         } catch (error) {
             res.status(500).json({ msg: "Erro interno, tente novamente mais tarde.", erro: error.message })
         }
     }
+
+    static async logout(req, res) {
+        try {
+            const { nomeCookie, options } = obterConfiguracaoCookie();
+            res.clearCookie(nomeCookie, {
+                httpOnly: options.httpOnly,
+                secure: options.secure,
+                sameSite: options.sameSite,
+                path: options.path
+            });
+
+            return res.status(200).json({ mensagem: "Logout realizado com sucesso!" });
+        } catch (error) {
+            res.status(500).json({ msg: "Erro interno, tente novamente mais tarde.", erro: error.message })
+        }
+    }
+
     static async criarAdmin(req, res) {
         try {
             const senhaHash = await bcrypt.hash(process.env.SENHA_SUPER_ADMIN, 10)

@@ -45,9 +45,10 @@ A API sobe em http://localhost:PORT, conforme definido no .env.
 ## Regras de acesso (autenticação e perfis)
 
 ### Autenticação (JWT)
-- Envie o token no header:
+- O backend cria um cookie HttpOnly no login com token JWT e expiração.
+- Opcionalmente, também é aceito envio por header:
   - Authorization: Bearer <token>
-- O token é gerado no login e contém: id, email e perfil.
+- O token contém: id, email e perfil.
 
 ### Perfis
 - admin
@@ -97,6 +98,7 @@ A API sobe em http://localhost:PORT, conforme definido no .env.
 
 ### Usuários
 - POST /usuarios/login
+- POST /usuarios/logout
 - GET /usuarios/perfil
 - GET /usuarios
 - POST /usuarios
