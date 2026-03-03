@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão Restaurante - Front</title>
+    <script type="module" src="/src/main.js" defer></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Gestão de Restaurante</h1>
+
+      <section class="card">
+        <h2>Login</h2>
+        <form id="login-form">
+          <label>
+            E-mail
+            <input id="email" type="email" placeholder="admin@exemplo.com" required />
+          </label>
+          <label>
+            Senha
+            <input id="senha" type="password" required />
+          </label>
+          <button type="submit">Entrar</button>
+        </form>
+        <p id="auth-status">Sem autenticação.</p>
+      </section>
+
+      <section class="card">
+        <h2>Consultas</h2>
+        <div class="actions">
+          <button id="btn-perfil">Perfil</button>
+          <button id="btn-usuarios">Usuários (admin)</button>
+          <button id="btn-mesas">Mesas</button>
+          <button id="btn-cardapio">Cardápio</button>
+          <button id="btn-sair" class="secondary">Sair</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Resultado</h2>
+        <pre id="output">Faça login para consultar a API.</pre>
+      </section>
+    </main>
+  </body>
+</html>
